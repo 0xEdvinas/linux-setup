@@ -4,6 +4,37 @@
 # SYSTEM
 #
 
+# Set timezone
+sudo timedatectl set-timezone Europe/Vilnius
+
+# Set system language to English but formats to Lithuanian
+mkdir -p ~/.config
+
+cat <<EOF > ~/.config/locale.conf
+LANG=C.UTF-8
+LC_NUMERIC=lt_LT.UTF-8
+LC_TIME=lt_LT.UTF-8
+LC_MONETARY=lt_LT.UTF-8
+LC_PAPER=lt_LT.UTF-8
+LC_MEASUREMENT=lt_LT.UTF-8
+LC_ADDRESS=lt_LT.UTF-8
+LC_IDENTIFICATION=lt_LT.UTF-8
+LC_NAME=lt_LT.UTF-8
+LC_TELEPHONE=lt_LT.UTF-8
+EOF
+
+# Keyboard layouts KDE specific
+mkdir -p ~/.config
+
+cat <<EOF > ~/.config/kxkbrc
+[Layout]
+DisplayNames=
+LayoutList=us,lt,ru
+Use=true
+VariantList=
+Options=grp:win_space_toggle
+EOF
+
 # Update the system
 sudo dnf update -y
 flatpak update -y
@@ -26,11 +57,11 @@ sudo dnf install gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plug
 
 # Debloat
 sudo dnf remove firefox libreoffice\* -y
-sudo dnf remove akregator dragon elisa-player mediawriter kmahjongg kmines kmouth kpat krfb neochat krdc
+sudo dnf remove akregator dragon elisa-player mediawriter kmahjongg kmines kmouth kpat krfb neochat krdc kwrite
 
 
 # Install my must have software
-sudo dnf install vlc fooyin qbittorrent fastfetch htop vim neovim ranger git -y
+sudo dnf install vlc fooyin qbittorrent fastfetch htop vim neovim ranger git kate -y
 
 flatpak install flathub com.google.Chrome org.mozilla.firefox com.bitwarden.desktop org.libreoffice.LibreOffice -y
 
@@ -38,7 +69,7 @@ flatpak install flathub com.google.Chrome org.mozilla.firefox com.bitwarden.desk
 # DEV
 #
 
-flatpak install flathub com.visualstudio.code
+flatpak install flathub com.visualstudio.code com.google.AndroidStudio com.jetbrains.PyCharm-Professional com.jetbrains.IntelliJ-IDEA-Community com.jetbrains.IntelliJ-IDEA-Ultimate com.jetbrains.WebStorm com.jetbrains.CLion com.jetbrains.Rider com.jetbrains.DataGrip com.jetbrains.PhpStorm com.jetbrains.RustRover com.jetbrains.GoLand cc.arduino.IDE2 io.dbeaver.DBeaverCommunity -y
 
 # Py
 sudo dnf install python3 python3-pip -y
@@ -69,6 +100,10 @@ sudo systemctl start libvirtd
 
 # Add user to libvirt and kvm groups
 sudo usermod -aG libvirt,kvm $USER
+
+# Autostart network
+sudo virsh net-start default
+sudo virsh net-autostart default
 
 #
 # FILESYSTEM
