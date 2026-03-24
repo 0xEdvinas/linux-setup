@@ -24,15 +24,36 @@ sudo dnf install gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plug
 # APPS
 #
 
+# Debloat
+sudo dnf remove firefox libreoffice\* -y
+sudo dnf remove akregator dragon elisa-player mediawriter kmahjongg kmines kmouth kpat krfb neochat krdc
+
+
 # Install my must have software
-sudo dnf install vlc qbittorrent fastfetch htop vim neovim ranger git -y
+sudo dnf install vlc fooyin qbittorrent fastfetch htop vim neovim ranger git -y
+
+flatpak install flathub com.google.Chrome org.mozilla.firefox com.bitwarden.desktop org.libreoffice.LibreOffice -y
 
 #
 # DEV
 #
 
-# Dev tools
+flatpak install flathub com.visualstudio.code
+
+# Py
 sudo dnf install python3 python3-pip -y
+
+# C++/C
+sudo dnf install \
+    gcc gcc-c++ binutils glibc-devel glibc-headers libstdc++-devel libstdc++-static \
+    make automake autoconf libtool pkgconf pkgconf-pkg-config \
+    gdb lldb \
+    cmake ninja-build \
+    cppcheck clang clang-tools-extra clang-format clang-tidy \
+    valgrind perf \
+    zlib-devel openssl-devel libcurl-devel \
+    libatomic libatomic_ops-devel \
+    gtest-devel gmock-devel catch-devel
 
 #
 # VIRTUALIZATION
