@@ -23,7 +23,7 @@ LC_NAME=lt_LT.UTF-8
 LC_TELEPHONE=lt_LT.UTF-8
 EOF
 
-# Keyboard layouts KDE specific
+# Keyboard layouts KDE SPECIFIC!!!
 mkdir -p ~/.config
 
 cat <<EOF > ~/.config/kxkbrc
@@ -135,6 +135,9 @@ sudo virsh net-autostart default
 # FILESYSTEM
 #
 cd ~
+
+mkdir -p Binaries/Applications
+mkdir -p Binaries/Games
 
 mkdir -p Personal/IDs
 mkdir -p Personal/ProfessionalPhotos
