@@ -51,6 +51,28 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 # Install all the codecs
 sudo dnf install gstreamer1-plugins-base gstreamer1-plugins-good gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld gstreamer1-plugins-ugly gstreamer1-libav ffmpeg ffmpeg-libs ffmpeg-free lame libdvdcss -y
 
+# Fonts
+sudo dnf install fontawesome-fonts -y
+
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+unzip JetBrainsMono.zip -d JetBrainsMono
+rm JetBrainsMono.zip
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+unzip FiraCode.zip -d FiraCode
+rm FiraCode.zip
+
+fc-cache -fv
+cd ~
+
+# zsh
+sudo dnf install zsh -y
+chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 #
 # APPS
 #
@@ -95,7 +117,7 @@ sudo systemctl enable docker
 # Run docker without sudo
 sudo usermod -aG docker $USER
 
-flatpak install flathub com.visualstudio.code com.google.AndroidStudio com.jetbrains.PyCharm-Professional com.jetbrains.IntelliJ-IDEA-Community com.jetbrains.IntelliJ-IDEA-Ultimate com.jetbrains.WebStorm com.jetbrains.CLion com.jetbrains.Rider com.jetbrains.DataGrip com.jetbrains.PhpStorm com.jetbrains.RustRover com.jetbrains.GoLand cc.arduino.IDE2 io.dbeaver.DBeaverCommunity -y
+flatpak install flathub com.visualstudio.code com.google.AndroidStudio com.jetbrains.PyCharm-Professional com.jetbrains.IntelliJ-IDEA-Community com.jetbrains.WebStorm com.jetbrains.CLion com.jetbrains.Rider com.jetbrains.DataGrip com.jetbrains.PhpStorm com.jetbrains.RustRover com.jetbrains.GoLand cc.arduino.IDE2 io.dbeaver.DBeaverCommunity -y
 
 # Py
 sudo dnf install python3 python3-pip -y
@@ -110,7 +132,11 @@ sudo dnf install \
     valgrind perf \
     zlib-devel openssl-devel libcurl-devel \
     libatomic libatomic_ops-devel \
-    gtest-devel gmock-devel catch-devel
+    gtest-devel gmock-devel catch-devel -y
+
+    # Setup global git config
+git config --global user.name "Edvinas Bureika"
+git config --global user.email "edvinasbureika@gmail.com"
 
 #
 # VIRTUALIZATION
@@ -166,7 +192,7 @@ mkdir -p tmp/
 
 # Import my nvim config from my github page
 rm -rf ~/.config/nvim
-git clone https://github.com/0xEdvinas/.nvim.git ~/.config/nvim
+git clone https://github.com/0xEdvinas/nvim.git ~/.config/nvim
 
 # Install hyperland
 echo "Do you want to install HyperLand and its config? (y/n)"
@@ -181,3 +207,8 @@ read -r qemu_hooks
 if [[ "$qemu_hooks" == "y" || "$qemu_hooks" == "Y" ]]; then
     echo "Installing QEMU Hooks"
 fi
+
+
+#
+# SSH key gen at the end for github
+#
